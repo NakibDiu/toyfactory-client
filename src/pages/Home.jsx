@@ -1,9 +1,11 @@
+import Gallery from "../components/Gallery"
 import Hero from "../components/Hero"
 
 const Home = () => {
   return (
-    <div>
+    <div className="space-y-24 mb-16">
         <Hero />
+        <Gallery />
     </div>
   )
 }
