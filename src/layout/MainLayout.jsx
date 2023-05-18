@@ -1,7 +1,11 @@
+import Navbar from "../components/common/Navbar";
+
 const MainLayout = () => {
   return (
-    <div>MainLayout</div>
-  )
-}
+    <>
+      <Navbar />
+    </>
+  );
+};
 
-export default MainLayout
+export default MainLayout;
