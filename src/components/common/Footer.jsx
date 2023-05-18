@@ -4,12 +4,7 @@ const Footer = () => {
   return (
     <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
       <img src={logo} alt="logo" className="w-2/4 lg:w-1/4" />
-      {/* <div className="grid grid-flow-col gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
-      </div> */}
+      <p>A kids toy shop is a store that specializes in selling toys and games designed specifically for children.</p>
       <div>
         <div className="grid grid-flow-col gap-4">
           <Link to="https://twitter.com">
