@@ -32,12 +32,10 @@ const Signup = () => {
     }
 
     signUpWithEmail(email, password)
-      .then((result) => {
-        const newUser = result.user;
+      .then(() => {
         const updatedData = { displayName: name };
         updateUser(updatedData)
           .then(() => {
-            console.log(newUser);
             Swal.fire({
               icon: "success",
               title: "Account created successfully",
