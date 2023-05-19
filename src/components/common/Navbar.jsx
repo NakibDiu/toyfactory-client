@@ -57,7 +57,7 @@ const Navbar = () => {
               All Toys
             </NavLink>
             <NavLink
-              to="/allToys"
+              to="/myToys"
               className={({ isActive }) =>
                 isActive
                   ? "text-sky-400 font-medium text-base"
@@ -105,7 +105,7 @@ const Navbar = () => {
             All Toys
           </NavLink>
           <NavLink
-            to="/allToys"
+            to="/myToys"
             className={({ isActive }) =>
               isActive
                 ? "text-sky-400 font-semibold text-xl"
@@ -118,6 +118,16 @@ const Navbar = () => {
       </div>
       {/* right */}
       <div className="navbar-end">
+        <div className="flex gap-4 px-6">
+          <NavLink to="/login">
+            <button className="btn btn-sm lg:btn-md btn-accent">Login</button>
+          </NavLink>
+          <NavLink to="/signup">
+            <button className="btn btn-sm lg:btn-md btn-success">
+              Sign up
+            </button>
+          </NavLink>
+        </div>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
