@@ -1,12 +1,12 @@
-import { useContext, useState } from "react"; 
-import { NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Signup = () => {
-  const [errors, setErrors] = useState({}); 
-  const {signUpWithEmail} = useContext(AuthContext)
-
-
+  const [errors, setErrors] = useState({});
+  const { signUpWithEmail, updateUser } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleSignup = (event) => {
     event.preventDefault();
@@ -31,19 +31,41 @@ const Signup = () => {
       return;
     }
 
-    const userData = { name, email, password, confirmPassword };
-
     signUpWithEmail(email, password)
-    .then(result => {
-      console.log(result);
-      const newUser = result.user;
-      console.log(newUser);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-
-    console.log(userData);
+      .then((result) => {
+        const newUser = result.user;
+        const updatedData = { displayName: name };
+        updateUser(updatedData)
+          .then(() => {
+            console.log(newUser);
+            Swal.fire({
+              icon: "success",
+              title: "Account created successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            form.reset();
+            navigate("/login")
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              icon: "error",
+              title: err.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
 
   return (
