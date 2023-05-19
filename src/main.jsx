@@ -11,7 +11,7 @@ import Alltoys from "./components/Alltoys";
 import Mytoys from "./components/Mytoys";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
+import AuthProviders from "./providers/AuthProviders";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,34 +20,36 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "/blogs",
-        element: <Blogs />
+        element: <Blogs />,
       },
       {
         path: "/allToys",
-        element: <Alltoys />
+        element: <Alltoys />,
       },
       {
         path: "/myToys",
-        element: <Mytoys />
+        element: <Mytoys />,
       },
       {
         path: "/login",
-        element: <Login />
+        element: <Login />,
       },
       {
         path: "/signup",
-        element: <Signup />
-      }
-    ]
+        element: <Signup />,
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProviders>
+      <RouterProvider router={router} />
+    </AuthProviders>
   </React.StrictMode>
 );
