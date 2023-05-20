@@ -169,7 +169,9 @@ const Navbar = () => {
             <>
               <h4 className="text-base">
                 Hi,{"   "}
-                <span className="font-medium">{user?.displayName}</span>
+                <span className="font-medium">
+                  {user?.displayName || "Anonymous"}
+                </span>
               </h4>
               <button
                 className="btn btn-error btn-sm lg:btn-md text-white"

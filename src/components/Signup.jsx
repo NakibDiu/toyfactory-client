@@ -2,11 +2,12 @@ import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
+import { FaGoogle } from "react-icons/fa";
 
 const Signup = () => {
   const [errors, setErrors] = useState({});
-  const { signUpWithEmail, updateUser } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const { signUpWithEmail, updateUser, googleSignUp } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSignup = (event) => {
     event.preventDefault();
@@ -43,7 +44,7 @@ const Signup = () => {
               timer: 1500,
             });
             form.reset();
-            navigate("/login")
+            navigate("/login");
           })
           .catch((err) => {
             console.log(err);
@@ -57,6 +58,29 @@ const Signup = () => {
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignUp()
+      .then((res) => {
+        const newUser = res.user;
+        console.log(newUser);
+        Swal.fire({
+          icon: "success",
+          title: "Account created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
         Swal.fire({
           icon: "error",
           title: err.message,
@@ -136,9 +160,11 @@ const Signup = () => {
             )}{" "}
             {/* Display confirm password error */}
           </div>
-          <button type="submit" className="btn btn-wide self-center my-4">
-            Sign Up
-          </button>
+          <input
+            type="submit"
+            className="btn btn-wide self-center my-4"
+            value="Sign Up"
+          />
         </form>
         <p className="text-base ">
           Already Have an account ?{" "}
@@ -146,6 +172,15 @@ const Signup = () => {
             Login
           </NavLink>
         </p>
+        <div className="flex flex-col items-center gap-4">
+          <p className="uppercase text-lg font-semibold">or</p>
+          <button
+            className="btn btn-circle btn-accent"
+            onClick={handleGoogleSignIn}
+          >
+            <FaGoogle />
+          </button>
+        </div>
       </div>
     </div>
   );

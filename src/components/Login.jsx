@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
+import { FaGoogle } from "react-icons/fa";
 const Login = () => {
-  const {     loginWithEmail
-  } = useContext(AuthContext);
+  const { loginWithEmail, googleSignUp } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogIn = (event) => {
@@ -23,7 +23,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        form.reset()
+        form.reset();
         navigate("/");
       })
       .catch((err) => {
@@ -36,6 +36,30 @@ const Login = () => {
         });
       });
   };
+
+  const handleGoogleSignIn = () => {
+    googleSignUp()
+      .then((res) => {
+        const newUser = res.user;
+        console.log(newUser);
+        Swal.fire({
+          icon: "success",
+          title: "Account created successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
   return (
     <div className="px-8 lg:px-16 min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-center text-4xl font-semibold underline">Log In</h1>
@@ -78,6 +102,15 @@ const Login = () => {
             Sign Up
           </NavLink>
         </p>
+        <div className="flex flex-col items-center gap-4">
+          <p className="uppercase text-lg font-semibold">or</p>
+          <button
+            className="btn btn-circle btn-success"
+            onClick={handleGoogleSignIn}
+          >
+            <FaGoogle />
+          </button>
+        </div>
       </div>
     </div>
   );
