@@ -12,6 +12,9 @@ import Mytoys from "./components/Mytoys";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AuthProviders from "./providers/AuthProviders";
+
+const backendUrl = import.meta.env.VITE_backendUrl;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +32,7 @@ const router = createBrowserRouter([
       {
         path: "/allToys",
         element: <Alltoys />,
+        loader: () => fetch(`${backendUrl}/toys`),
       },
       {
         path: "/myToys",

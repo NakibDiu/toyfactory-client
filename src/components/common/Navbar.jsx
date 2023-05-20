@@ -167,9 +167,9 @@ const Navbar = () => {
             <progress className="progress w-28"></progress>
           ) : user ? (
             <>
-              <h4 className="text-base">
+              <h4 className="text-xs lg:text-base">
                 Hi,{"   "}
-                <span className="font-medium">
+                <span className="font-medium text-xs lg:text-base">
                   {user?.displayName || "Anonymous"}
                 </span>
               </h4>
