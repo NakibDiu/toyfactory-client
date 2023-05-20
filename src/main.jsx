@@ -12,8 +12,10 @@ import Mytoys from "./components/Mytoys";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AuthProviders from "./providers/AuthProviders";
+import ToyModal from "./components/common/ToyModal";
 
 const backendUrl = import.meta.env.VITE_backendUrl;
+// const backendUrl = "http://localhost:3000";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,6 @@ const router = createBrowserRouter([
       {
         path: "/allToys",
         element: <Alltoys />,
-        loader: () => fetch(`${backendUrl}/toys`),
       },
       {
         path: "/myToys",
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
       },
+      {
+        path: "/toys/:id",
+        element: <ToyModal />,
+        loader: async ({params}) => fetch(`${backendUrl}/toys/${params.id}`)
+      }
     ],
   },
 ]);

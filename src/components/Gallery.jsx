@@ -59,7 +59,7 @@ const Gallery = () => {
         Heroes Gallery
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {images.map((img) => (
+        {images?.map((img) => (
           <div
             key={img.id}
             className="rounded-lg overflow-hidden border border-gray-300 shadow-lg relative transform hover:scale-105 transition-transform duration-300 p-3 cursor-pointer"
