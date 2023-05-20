@@ -1,7 +1,32 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, loading, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "User logged out successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -9,7 +34,7 @@ const Navbar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-5 w-5 md:h-8 md:w-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -56,19 +81,21 @@ const Navbar = () => {
             >
               All Toys
             </NavLink>
-            <NavLink
-              to="/myToys"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-sky-400 font-medium text-base"
-                  : " text-base text-gray-800"
-              }
-            >
-              My Toys
-            </NavLink>
+            {user && (
+              <NavLink
+                to="/myToys"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sky-400 font-medium text-base"
+                    : " text-base text-gray-800"
+                }
+              >
+                My Toys
+              </NavLink>
+            )}
           </ul>
         </div>
-        <Link to="/" className="lg:navbar-start">
+        <Link to="/" className="hidden md:block lg:navbar-start">
           <img src={logo} alt="logo" />
         </Link>
       </div>
@@ -104,53 +131,54 @@ const Navbar = () => {
           >
             All Toys
           </NavLink>
-          <NavLink
-            to="/myToys"
-            className={({ isActive }) =>
-              isActive
-                ? "text-sky-400 font-semibold text-xl"
-                : "font-medium text-xl text-gray-800"
-            }
-          >
-            My Toys
-          </NavLink>
+          {user && (
+            <NavLink
+              to="/myToys"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-sky-400 font-semibold text-xl"
+                  : "font-medium text-xl text-gray-800"
+              }
+            >
+              My Toys
+            </NavLink>
+          )}
         </ul>
       </div>
       {/* right */}
       <div className="navbar-end">
-        <div className="flex gap-4 px-6">
-          <NavLink to="/login">
-            <button className="btn btn-sm lg:btn-md btn-accent">Login</button>
-          </NavLink>
-          <NavLink to="/signup">
-            <button className="btn btn-sm lg:btn-md btn-success">
-              Sign up
-            </button>
-          </NavLink>
-        </div>
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://picsum.photos/500/300?random" />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
+        {!user && !loading && (
+          <div className="flex gap-4 px-6 items-center">
+            <NavLink to="/login">
+              <button className="btn btn-sm lg:btn-md btn-accent text-xs lg:text-sm">
+                Login
+              </button>
+            </NavLink>
+            <NavLink to="/signup">
+              <button className="btn btn-sm lg:btn-md btn-success text-xs lg:text-sm">
+                Sign up
+              </button>
+            </NavLink>
+          </div>
+        )}
+
+        <div className="dropdown dropdown-end flex gap-3 items-center">
+          {loading ? (
+            <progress className="progress w-28"></progress>
+          ) : user ? (
+            <>
+              <h4 className="text-base">
+                Hi,{"   "}
+                <span className="font-medium">{user?.displayName}</span>
+              </h4>
+              <button
+                className="btn btn-error btn-sm lg:btn-md text-white"
+                onClick={handleLogOut}
+              >
+                Log out
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded mt-auto">
       <img src={logo} alt="logo" className="w-2/4 lg:w-1/4" />
       <p>A kids toy shop is a store that specializes in selling toys and games designed specifically for children.</p>
       <div>

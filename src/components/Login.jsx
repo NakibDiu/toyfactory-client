@@ -37,7 +37,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="px-8 lg:px-16">
+    <div className="px-8 lg:px-16 min-h-screen flex flex-col justify-center items-center">
       <h1 className="text-center text-4xl font-semibold underline">Log In</h1>
       <div className="flex flex-col justify-center items-center gap-8 mb-16 mt-4">
         <form
@@ -73,7 +73,7 @@ const Login = () => {
           </button>
         </form>
         <p className="text-base ">
-          Don't Have an account ?{"  "}
+          Don&apos;t Have an account ?{"  "}
           <NavLink to="/signup" className="text-green-500 font-medium">
             Sign Up
           </NavLink>
