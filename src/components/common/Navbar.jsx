@@ -82,6 +82,7 @@ const Navbar = () => {
               All Toys
             </NavLink>
             {user && (
+              <>
               <NavLink
                 to="/myToys"
                 className={({ isActive }) =>
@@ -92,6 +93,17 @@ const Navbar = () => {
               >
                 My Toys
               </NavLink>
+              <NavLink
+                to="/addToy"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sky-400 font-medium text-base"
+                    : " text-base text-gray-800"
+                }
+              >
+                Add Toy
+              </NavLink>
+              </>
             )}
           </ul>
         </div>
@@ -132,16 +144,28 @@ const Navbar = () => {
             All Toys
           </NavLink>
           {user && (
-            <NavLink
-              to="/myToys"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-sky-400 font-semibold text-xl"
-                  : "font-medium text-xl text-gray-800"
-              }
-            >
-              My Toys
-            </NavLink>
+            <>
+              <NavLink
+                to="/myToys"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sky-400 font-semibold text-xl"
+                    : "font-medium text-xl text-gray-800"
+                }
+              >
+                My Toys
+              </NavLink>
+              <NavLink
+                to="/addToy"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sky-400 font-semibold text-xl"
+                    : "font-medium text-xl text-gray-800"
+                }
+              >
+                Add Toy
+              </NavLink>
+            </>
           )}
         </ul>
       </div>

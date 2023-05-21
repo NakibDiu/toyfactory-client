@@ -1,7 +1,8 @@
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ToyModal = () => {
-  const toy = useLoaderData()
+  const toy = useLoaderData();
 
   const {
     toyName,
@@ -13,6 +14,15 @@ const ToyModal = () => {
     description,
     category,
   } = toy;
+
+  const handleAddToFavorite = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Thanks for adding",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
 
   return (
     <div className="hero min-h-screen px-10 shadow-2xl">
@@ -44,9 +54,14 @@ const ToyModal = () => {
               </p>
             </div>
           </div>
-          <button className="btn btn-md btn-success text-white mt-6">
-            Add to Favorite
-          </button>
+          <div className="flex justify-center items-center">
+            <button
+              className="btn btn-md btn-success text-white mt-6"
+              onClick={handleAddToFavorite}
+            >
+              Add to Favorite
+            </button>
+          </div>
         </div>
       </div>
     </div>

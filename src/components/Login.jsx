@@ -44,7 +44,7 @@ const Login = () => {
         console.log(newUser);
         Swal.fire({
           icon: "success",
-          title: "Account created successfully",
+          title: "User Logged in successfully",
           showConfirmButton: false,
           timer: 1500,
         });
