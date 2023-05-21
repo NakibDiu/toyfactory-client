@@ -30,8 +30,8 @@ const AddToy = () => {
       sellerName,
     };
 
-    // const backendUrl = import.meta.env.VITE_backendUrl;
-    const backendUrl = "http://localhost:3000";
+    const backendUrl = import.meta.env.VITE_backendUrl;
+    // const backendUrl = "http://localhost:3000";
 
     fetch(`${backendUrl}/addToy`, {
       method: "POST",
