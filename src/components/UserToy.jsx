@@ -1,7 +1,11 @@
-import {FcRating} from "react-icons/fc"
-const UserToy = ({ toy }) => {
+import { FcRating } from "react-icons/fc";
+import Swal from "sweetalert2";
+const UserToy = ({ toy, handleDeleteToy }) => {
   console.log(toy);
-  const { category, picture, price, rating, toyName } = toy;
+  const { _id, category, picture, price, rating, toyName } = toy;
+
+  
+
   return (
     <div className="w-full p-4 border-2 border-solid rounded-3xl flex justify-between items-center gap-2 lg:gap-4 xl:gap-5 shadow-lg lg:shadow-xl">
       <div>
@@ -16,9 +20,13 @@ const UserToy = ({ toy }) => {
         <p>{category}</p>
       </div>
       <p className="py-2 text-base lg:text-lg font-semibold">{price + "  $"}</p>
-      <p className="py-2 text-base lg:text-lg font-semibold flex items-center gap-1">{rating + " "} <FcRating /></p>
+      <p className="py-2 text-base lg:text-lg font-semibold flex items-center gap-1">
+        {rating + " "} <FcRating />
+      </p>
 
-      <button className="btn btn-sm">Delete</button>
+      <button className="btn btn-sm" onClick={()=> handleDeleteToy(_id)}>
+        Delete
+      </button>
     </div>
   );
 };

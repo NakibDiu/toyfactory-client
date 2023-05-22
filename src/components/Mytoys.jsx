@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import UserToy from "./UserToy";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const Mytoys = () => {
   const [loading, setLoading] = useState(false);
@@ -19,6 +20,57 @@ const Mytoys = () => {
       });
   }, []);
 
+  const handleDeleteToy = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/toy/delete/${id}`, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.deletedCount === 1) {
+              const remaining = userToys.filter((toys) => toys._id !== id);
+              setUserToys(remaining);
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+          })
+          .catch((error) => {
+            Swal.fire({
+              icon: "error",
+              title: error.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      }
+    });
+  };
+
+  const [selectedValue, setSelectedValue] = useState("");
+  const handleFilter = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  useEffect(() => {
+    if (selectedValue === "low-to-high") {
+      const sortedProducts = [...userToys].sort((a, b) => a.price - b.price);
+      setUserToys(sortedProducts);
+    } else if (selectedValue === "high-to-low") {
+      const sortedProducts = [...userToys].sort((a, b) => b.price - a.price);
+      setUserToys(sortedProducts);
+    }
+  }, [selectedValue]);
+
   return (
     <div className="min-h-screen my-16">
       {loading && (
@@ -26,7 +78,14 @@ const Mytoys = () => {
           <h1 className="text-4xl font-semibold text-center">Loading....</h1>
         </div>
       )}
-      <h1 className="text-2xl lg:text-4xl text-center font-bold">My Toys</h1>
+      <div className="flex justify-between mx-6 lg:mx-10">
+        <h1 className="text-2xl lg:text-4xl text-center font-bold">My Toys</h1>
+        <select id="price-filter" onChange={handleFilter}>
+          <option value="default">Filter</option>
+          <option value="low-to-high">Price: Low to High</option>
+          <option value="high-to-low">Price: High to Low</option>
+        </select>
+      </div>
       <div className="mx-6 lg:mx-10 xl:mx-auto xl:max-w-[900px]">
         {userToys.length < 1 ? (
           <>
@@ -42,8 +101,21 @@ const Mytoys = () => {
             <div className="my-8 ">
               <div className=" w-full flex flex-col justify-center gap-y-5">
                 {userToys?.map((toy) => {
-                  return <UserToy key={toy._id} toy={toy} />;
+                  return (
+                    <UserToy
+                      key={toy._id}
+                      toy={toy}
+                      handleDeleteToy={handleDeleteToy}
+                    />
+                  );
                 })}
+              </div>
+              <div className="w-full flex justify-center items-center my-5">
+                <NavLink to="/addToy">
+                  <button className="text-white font-medium rounded-lg bg-gradient-to-r from-red-500 to-orange-400 btn-sm lg:btn-md">
+                    Add More
+                  </button>
+                </NavLink>
               </div>
             </div>
           </>
