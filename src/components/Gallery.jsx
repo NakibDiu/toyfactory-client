@@ -54,7 +54,7 @@ const images = [
 const Gallery = () => {
   const navigate = useNavigate();
   return (
-    <div className="space-y-10 px-6 lg:px-10">
+    <div className="space-y-10 px-6 lg:px-10" data-aos="fade-down">
       <h1 className="text-3xl lg:text-5xl font-bold text-center text-gray-600">
         Heroes Gallery
       </h1>
@@ -63,6 +63,7 @@ const Gallery = () => {
           <div
             key={img.id}
             className="rounded-lg overflow-hidden border border-gray-300 shadow-lg relative transform hover:scale-105 transition-transform duration-300 p-3 cursor-pointer"
+            data-aos="fade-up"
           >
             <img
               src={img.img}
