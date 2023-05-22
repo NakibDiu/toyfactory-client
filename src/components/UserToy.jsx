@@ -1,13 +1,11 @@
 import { FcRating } from "react-icons/fc";
-import Swal from "sweetalert2";
 const UserToy = ({ toy, handleDeleteToy }) => {
-  console.log(toy);
   const { _id, category, picture, price, rating, toyName } = toy;
 
   
 
   return (
-    <div className="w-full p-4 border-2 border-solid rounded-3xl flex justify-between items-center gap-2 lg:gap-4 xl:gap-5 shadow-lg lg:shadow-xl">
+    <div className="w-full p-4 border-2 border-solid rounded-3xl flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 lg:gap-4 xl:gap-5 shadow-lg lg:shadow-xl">
       <div>
         <img
           src={picture || "https://picsum.photos/200/300"}
@@ -16,7 +14,7 @@ const UserToy = ({ toy, handleDeleteToy }) => {
         />
       </div>
       <div className="flex flex-col gap-0">
-        <h2 className="text-base font-medium">{toyName}</h2>
+        <h2 className="text-base font-medium text-center">{toyName}</h2>
         <p>{category}</p>
       </div>
       <p className="py-2 text-base lg:text-lg font-semibold">{price + "  $"}</p>

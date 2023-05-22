@@ -14,7 +14,6 @@ const Mytoys = () => {
     fetch(`${backendUrl}/userToys?email=${user?.email}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setUserToys(data);
         setLoading(false);
       });
@@ -30,14 +29,12 @@ const Mytoys = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(result);
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/toy/delete/${id}`, {
+        fetch(`${backendUrl}/toy/delete/${id}`, {
           method: "DELETE",
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             if (data.deletedCount === 1) {
               const remaining = userToys.filter((toys) => toys._id !== id);
               setUserToys(remaining);
@@ -63,11 +60,21 @@ const Mytoys = () => {
 
   useEffect(() => {
     if (selectedValue === "low-to-high") {
-      const sortedProducts = [...userToys].sort((a, b) => a.price - b.price);
-      setUserToys(sortedProducts);
+      setLoading(true);
+      fetch(`${backendUrl}/toys/sort/desc?email=${user?.email}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUserToys(data);
+          setLoading(false);
+        });
     } else if (selectedValue === "high-to-low") {
-      const sortedProducts = [...userToys].sort((a, b) => b.price - a.price);
-      setUserToys(sortedProducts);
+      setLoading(true);
+      fetch(`${backendUrl}/toys/sort/asc?email=${user?.email}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUserToys(data);
+          setLoading(false);
+        });
     }
   }, [selectedValue]);
 
@@ -80,7 +87,7 @@ const Mytoys = () => {
       )}
       <div className="flex justify-between mx-6 lg:mx-10">
         <h1 className="text-2xl lg:text-4xl text-center font-bold">My Toys</h1>
-        <select id="price-filter" onChange={handleFilter}>
+        <select id="price-filter" onChange={handleFilter} className="outline outline-1 px-3">
           <option value="default">Filter</option>
           <option value="low-to-high">Price: Low to High</option>
           <option value="high-to-low">Price: High to Low</option>
