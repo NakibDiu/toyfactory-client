@@ -3,6 +3,7 @@ import Gallery from "../components/Gallery";
 import Hero from "../components/Hero";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Shop from "../components/Shop";
 
 const Home = () => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const Home = () => {
     <div className="space-y-24 mb-16">
       <Hero />
       <Gallery />
+      <Shop />
     </div>
   );
 };

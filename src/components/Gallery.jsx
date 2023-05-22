@@ -78,7 +78,7 @@ const Gallery = () => {
                 <NavLink to="/allToys">
                   <button
                     className="btn btn-info btn-sm text-white"
-                    onClick={navigate("/allToys")}
+                    onClick={() => navigate("/allToys")}
                   >
                     See More
                   </button>

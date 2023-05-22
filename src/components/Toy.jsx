@@ -10,7 +10,6 @@ const Toy = ({ toy }) => {
     category,
     _id,
   } = toy;
-  console.log(toy);
   return (
     <>
       {toy ? (
