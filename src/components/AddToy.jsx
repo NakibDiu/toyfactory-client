@@ -1,9 +1,27 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 
 const AddToy = () => {
   const { user } = useContext(AuthContext);
+  const categories = [
+    "Avengers",
+    "Spider-Man",
+    "X-Men",
+    "Black Panther",
+    "Doctor Strange",
+    "Guardians of the Galaxy",
+    "Captain Marvel",
+    "Ant-Man",
+  ];
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const handleCategoryChange = (event) => {
+    const selectedCategory = event.target.value;
+    setSelectedCategory(selectedCategory);
+    console.log("Selected category:", selectedCategory);
+  };
 
   const handleAddToy = (event) => {
     event.preventDefault();
@@ -16,7 +34,7 @@ const AddToy = () => {
     const rating = form.rating.value;
     const availableQuantity = form.availableQuantity.value;
     const description = form.description.value;
-    const category = form.category.value;
+    const category = selectedCategory;
 
     const newToy = {
       toyName,
@@ -38,13 +56,13 @@ const AddToy = () => {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newToy)
+      body: JSON.stringify(newToy),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if(data.insertedId){
-          form.reset()
+        if (data.insertedId) {
+          form.reset();
           Swal.fire({
             icon: "success",
             title: "Toys added successfully",
@@ -105,13 +123,21 @@ const AddToy = () => {
             >
               Category
             </label>
-            <input
-              type="text"
+            <select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
               id="category"
               name="category"
-              required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-            />
+              required
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label

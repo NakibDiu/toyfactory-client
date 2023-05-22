@@ -26,11 +26,11 @@ const ToyModal = () => {
 
   return (
     <div className="hero min-h-screen px-10 shadow-2xl">
-      <div className="hero-content flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="hero-content flex-col lg:flex-row gap-8 lg:gap-12 w-full">
         <img
           src={picture}
           alt={toyName}
-          className="w-full min-h-[150px] lg:min-h-[250px] rounded-lg shadow-xl bg-gray-100"
+          className="w-full lg:w-1/4 min-h-[150px] lg:min-h-[250px] rounded-lg shadow-xl bg-gray-100"
         />
         <div>
           <h1 className="text-2xl lg:text-4xl font-bold">{toyName}</h1>

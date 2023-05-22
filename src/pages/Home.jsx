@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Shop from "../components/Shop";
+import Testimonials from "../components/Testimonials";
 
 const Home = () => {
   useEffect(() => {
@@ -16,6 +17,7 @@ const Home = () => {
       <Hero />
       <Gallery />
       <Shop />
+      <Testimonials />
     </div>
   );
 };

@@ -16,13 +16,13 @@ const Shop = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [toys, setToys] = useState(null);
   const [loading, setLoading] = useState(false);
+  const backendUrl = import.meta.env.VITE_backendUrl;
 
   const handleTabSelect = (index) => {
-    
     setSelectedTab(index);
     const category = categories[index];
     setLoading(true);
-    fetch(`http://localhost:3000/toys/category/${category}`)
+    fetch(`${backendUrl}/toys/category/${category}`)
       .then((response) => response.json())
       .then((data) => {
         setToys(data);
