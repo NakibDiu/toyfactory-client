@@ -14,6 +14,7 @@ import Signup from "./components/Signup";
 import AuthProviders from "./providers/AuthProviders";
 import ToyModal from "./components/common/ToyModal";
 import AddToy from "./components/AddToy";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const backendUrl = import.meta.env.VITE_backendUrl;
 // const backendUrl = "http://localhost:3000";
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/myToys",
-        element: <Mytoys />,
+        element: (
+          <PrivateRoute>
+            <Mytoys />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -50,13 +55,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/toys/:id",
-        element: <ToyModal />,
-        loader: async ({params}) => fetch(`${backendUrl}/toys/${params.id}`)
+        element: (
+          <PrivateRoute>
+            <ToyModal />
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) => fetch(`${backendUrl}/toys/${params.id}`),
       },
       {
         path: "/addToy",
-        element: <AddToy />
-      }
+        element: (
+          <PrivateRoute>
+            <AddToy />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
