@@ -15,6 +15,7 @@ import AuthProviders from "./providers/AuthProviders";
 import ToyModal from "./components/common/ToyModal";
 import AddToy from "./components/AddToy";
 import PrivateRoute from "./routes/PrivateRoute";
+import UpdateToy from "./components/UpdateToy";
 
 const backendUrl = import.meta.env.VITE_backendUrl;
 // const backendUrl = "http://localhost:3000";
@@ -70,6 +71,15 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/update/:id",
+        element: <PrivateRoute>
+          <UpdateToy />
+          {/* <h1>Hello</h1> */}
+        </PrivateRoute>,
+        loader: async ({ params }) => fetch(`${backendUrl}/toys/${params.id}`),
+
+      }
     ],
   },
 ]);

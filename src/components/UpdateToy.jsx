@@ -1,9 +1,24 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
-const UpdateToy = () => {
+const AddToy = () => {
   const { user } = useContext(AuthContext);
+  const fetcedToyData = useLoaderData();
+  const navigate = useNavigate();
+
+  const {
+    toyName,
+    rating,
+    price,
+    picture,
+    description,
+    category,
+    _id,
+    availableQuantity,
+  } = fetcedToyData;
+
   const categories = [
     "Avengers",
     "Spider-Man",
@@ -15,7 +30,7 @@ const UpdateToy = () => {
     "Ant-Man",
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(category);
 
   const handleCategoryChange = (event) => {
     const selectedCategory = event.target.value;
@@ -23,7 +38,7 @@ const UpdateToy = () => {
     console.log("Selected category:", selectedCategory);
   };
 
-  const handleAddToy = (event) => {
+  const handleUpdateToy = (event) => {
     event.preventDefault();
     const form = event.target;
     const toyName = form.toyName.value;
@@ -48,11 +63,13 @@ const UpdateToy = () => {
       sellerName,
     };
 
+    console.log(newToy);
+
     const backendUrl = import.meta.env.VITE_backendUrl;
     // const backendUrl = "http://localhost:3000";
 
-    fetch(`${backendUrl}/addToy`, {
-      method: "POST",
+    fetch(`${backendUrl}/toys/update/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -61,17 +78,24 @@ const UpdateToy = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount > 0) {
           form.reset();
           Swal.fire({
             icon: "success",
-            title: "Toys added successfully",
+            title: "Toys updated successfully",
             showConfirmButton: false,
             timer: 1500,
           });
+          navigate("/myToys")
         }
       })
       .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: {err},
+          showConfirmButton: false,
+          timer: 1500,
+        });
         console.log(err);
       });
   };
@@ -79,12 +103,12 @@ const UpdateToy = () => {
   return (
     <div className="min-h-screen my-8 lg:my-16 space-y-8">
       <h1 className="text-2xl lg:text-4xl font-semibold text-center">
-        Add Toy
+        Update Toy
       </h1>
       <div className="xl:max-w-[900px] xl:mx-auto mx-6 lg:mx-10">
         <form
-          className="bg-gradient-to-tr from-red-400 to-orange-500 w-full p-3 lg:p-5 rounded-xl space-y-4"
-          onSubmit={handleAddToy}
+          className="bg-gradient-to-tr from-blue-700 to-white w-full p-3 lg:p-5 rounded-xl space-y-4"
+          onSubmit={handleUpdateToy}
         >
           <div>
             <label
@@ -99,6 +123,7 @@ const UpdateToy = () => {
               name="toyName"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={toyName}
             />
           </div>
           <div>
@@ -114,6 +139,7 @@ const UpdateToy = () => {
               name="description"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={description}
             />
           </div>
           <div>
@@ -152,6 +178,7 @@ const UpdateToy = () => {
               name="picture"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={picture}
             />
           </div>
           <div>
@@ -168,6 +195,7 @@ const UpdateToy = () => {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               defaultValue={user?.displayName}
+              disabled
             />
           </div>
           <div>
@@ -184,6 +212,7 @@ const UpdateToy = () => {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               defaultValue={user?.email}
+              disabled
             />
           </div>
           <div>
@@ -200,6 +229,7 @@ const UpdateToy = () => {
               step="0.01"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={price}
             />
           </div>
           <div>
@@ -218,6 +248,7 @@ const UpdateToy = () => {
               max="5"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={rating}
             />
           </div>
           <div>
@@ -235,14 +266,15 @@ const UpdateToy = () => {
               step="1"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              defaultValue={availableQuantity}
             />
           </div>
           <div className="flex justify-center items-center">
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-black text-white font-medium rounded hover:bg-gray-600"
             >
-              Submit
+              Update
             </button>
           </div>
         </form>
@@ -251,4 +283,4 @@ const UpdateToy = () => {
   );
 };
 
-export default UpdateToy;
+export default AddToy;

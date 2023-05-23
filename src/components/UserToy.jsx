@@ -1,8 +1,7 @@
 import { FcRating } from "react-icons/fc";
+import { NavLink } from "react-router-dom";
 const UserToy = ({ toy, handleDeleteToy }) => {
   const { _id, category, picture, price, rating, toyName } = toy;
-
-  
 
   return (
     <div className="w-full p-4 border-2 border-solid rounded-3xl flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 lg:gap-4 xl:gap-5 shadow-lg lg:shadow-xl">
@@ -21,8 +20,14 @@ const UserToy = ({ toy, handleDeleteToy }) => {
       <p className="py-2 text-base lg:text-lg font-semibold flex items-center gap-1">
         {rating + " "} <FcRating />
       </p>
+      <NavLink to={`/update/${_id}`}>
+        <button className="btn btn-sm btn-info">Update</button>
+      </NavLink>
 
-      <button className="btn btn-sm" onClick={()=> handleDeleteToy(_id)}>
+      <button
+        className="btn btn-sm btn-error"
+        onClick={() => handleDeleteToy(_id)}
+      >
         Delete
       </button>
     </div>
